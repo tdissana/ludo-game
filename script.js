@@ -57,26 +57,72 @@ function generateDices() {
     }
 }
 
-function rollDice() {
+function generateRandomNumber() {
     const min = 1;
     const max = 6;
     return Math.floor(Math.random() * max) + min;
 }
 
-function startGame() {
+function rollDice() {
+    const diceSound = document.getElementById("dice-roll-sound");
+    diceSound.play();
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve(generateRandomNumber());
+        }, 1000);
+    });
+}
+
+function rollingEffect(dice) {
+    const id = setInterval(() => dice.textContent = generateRandomNumber()
+    , 100);
+    setTimeout(() => clearInterval(id), 1000);
+}
+
+function selectDice(dice) {
+    return new Promise(resolve => {
+
+        dice.classList.add("current-dice");
+        dice.textContent = "🎲"
+        
+        let diceResult = 0;
+        async function handleClick() {
+            dice.removeEventListener("click", handleClick);
+            rollingEffect(dice);
+            diceResult = await rollDice();
+            dice.textContent = diceResult;
+            dice.style.backgroundColor = "darkblue";
+            setTimeout(() => {
+                dice.textContent = "?";
+                dice.style.backgroundColor = "";
+            }, 2000);
+            dice.classList.remove("current-dice");
+            resolve(dice.textContent);
+        }
+
+        dice.addEventListener("click", handleClick);
+        return diceResult;
+    });
+}
+
+async function startGame() {
     generateBoard();
     generateDices();
+
     const numberOfDices = 4;
     const dices = document.querySelectorAll("button");
+    
+    let count = 0;
 
     let currentDice = Math.floor(Math.random() * numberOfDices);
-
-    dices[currentDice].classList.add("current-dice");
-    dices[currentDice].textContent = "🎲";
-
-    dices[currentDice].addEventListener("click", event => {
-        dices[currentDice].textContent = rollDice();
-    });
+    while (count < 10) {
+        
+        let diceResult = await selectDice(dices[currentDice]);
+        
+        console.log(diceResult);
+        count++;
+        currentDice = (currentDice + 1) % 4;
+    }
 }
 
 startGame();
