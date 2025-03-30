@@ -38,4 +38,24 @@ function generateBoard() {
     }
 }
 
+function generateDices() {
+    const panels = document.querySelectorAll(".panel");
+    
+    for (let i = 0; i < 4; i++) {
+        const dice = document.createElement("button");
+
+        dice.type = "button";
+        dice.classList.add("dice");
+        dice.textContent = "?";
+
+        if (i === 0) dice.style.float = "left";
+        if (i === 1) dice.style.float = "right";
+        if (i === 2) dice.style.float = "right";
+        if (i === 3) dice.style.float = "left";
+
+        panels[i % 2 === 0 ? 0 : 1].appendChild(dice);
+    }
+}
+
 generateBoard();
+generateDices();

@@ -36,3 +36,16 @@
     border: 1px solid;
     overflow: hidden;
 }
+
+.dice {
+    width: 40px;
+    height: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+    border: 1px solid;
+    background-color: hsl(0, 2%, 65%);
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px hsla(0, 2%, 74%, 0.75);
+}
