@@ -49,3 +49,16 @@
     border-radius: 10px;
     box-shadow: 2px 2px 2px hsla(0, 2%, 74%, 0.75);
 }
+
+.dice:hover {
+    background-color: hsl(0, 2%, 55%);
+}
+
+.dice:active {
+    background-color: hsl(225, 72%, 45%);
+}
+
+.current-dice {
+    border: 4px solid gold;
+    cursor: pointer;
+}

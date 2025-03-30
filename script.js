@@ -57,5 +57,26 @@ function generateDices() {
     }
 }
 
-generateBoard();
-generateDices();
+function rollDice() {
+    const min = 1;
+    const max = 6;
+    return Math.floor(Math.random() * max) + min;
+}
+
+function startGame() {
+    generateBoard();
+    generateDices();
+    const numberOfDices = 4;
+    const dices = document.querySelectorAll("button");
+
+    let currentDice = Math.floor(Math.random() * numberOfDices);
+
+    dices[currentDice].classList.add("current-dice");
+    dices[currentDice].textContent = "🎲";
+
+    dices[currentDice].addEventListener("click", event => {
+        dices[currentDice].textContent = rollDice();
+    });
+}
+
+startGame();
